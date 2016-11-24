@@ -22,18 +22,19 @@ login({email: "q.lapointe@gmail.com", password: "quentinfb"}, function callback 
     })
 
     api.listen(function callback(err, message) {
-        let mots = RemoveAccents(message.body).toLowerCase().split(" ");
-        for (var i = 0; i < mots.length; i++) {
-            try {
-                url = pokemonGif(pokemonsfr.indexOf(mots[i]) + 1)
-                var request = http.get(url, function(response) {
-                    api.sendMessage({attachment: response}, message.threadID);
-                });
-            } catch (e) {
+        if (message.body) {
+            let mots = RemoveAccents(message.body).toLowerCase().split(' ')
+            for (var i = 0; i < mots.length; i++) {
+                try {
+                    url = pokemonGif(pokemonsfr.indexOf(mots[i]) + 1)
+                    var request = http.get(url, function(response) {
+                        api.sendMessage({attachment: response}, message.threadID);
+                    });
+                } catch (e) {
 
+                }
             }
         }
-
     });
 });
 
